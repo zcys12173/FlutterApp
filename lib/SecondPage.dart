@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_app/TitleBar.dart';
 
 class SecondPage extends StatelessWidget {
   @override
@@ -23,14 +24,13 @@ class RandomWordsState extends State<RandomWords> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold (
+    return new Scaffold(
       appBar: new AppBar(
-        title: new Text('Startup Name Generator'),
+        title: TitleBar(title: "首页", context: context, rightTap: null),
       ),
       body: _buildSuggestion(),
     );
   }
-
 
   Widget _buildSuggestion() {
     return new ListView.builder(
@@ -52,16 +52,19 @@ class RandomWordsState extends State<RandomWords> {
             __suggestions.addAll(generateWordPairs().take(10));
           }
           return _buildRow(__suggestions[index]);
-        }
-    );
+        });
   }
 
   Widget _buildRow(WordPair pair) {
+    void _onTap(){
+      Navigator.pushNamed(context, "/detail");
+    }
     return new ListTile(
       title: new Text(
         pair.asPascalCase,
         style: _biggerFont,
       ),
+      onTap: _onTap,
     );
   }
 }
